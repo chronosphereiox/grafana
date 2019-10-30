@@ -88,6 +88,7 @@ function convertTimeSeriesToDataFrame(timeSeries: TimeSeries): DataFrame {
     meta: timeSeries.meta,
     fields,
     length: timeSeries.datapoints.length,
+    traceIds: timeSeries.traceIds,
   };
 }
 

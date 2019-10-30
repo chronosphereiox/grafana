@@ -74,6 +74,7 @@ export function getDataMinMax(data: TimeSeries[]) {
  */
 export default class TimeSeries {
   datapoints: any;
+  traceIds?: any[][];
   id: string;
   // Represents index of original data frame in the quey response
   dataFrameIndex: number;

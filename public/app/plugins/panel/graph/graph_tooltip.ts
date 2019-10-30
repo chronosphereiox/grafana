@@ -1,5 +1,5 @@
-import $ from 'jquery';
 import { appEvents } from 'app/core/core';
+import $ from 'jquery';
 
 export default function GraphTooltip(this: any, elem: any, dashboard: any, scope: any, getSeriesFn: any) {
   const self = this;
@@ -127,6 +127,8 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         yaxis = series.yaxis.n;
       }
 
+      const traceId =
+        series.traceIds != null && series.traceIds[hoverIndex] != null ? series.traceIds[hoverIndex][0] : null;
       results[yaxis].push({
         value: value,
         hoverIndex: hoverIndex,
@@ -134,6 +136,7 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         label: series.aliasEscaped,
         time: pointTime,
         distance: hoverDistance,
+        traceId: traceId,
         index: i,
       });
     }
@@ -262,6 +265,9 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         seriesHtml +=
           '<i class="fa fa-minus" style="color:' + hoverInfo.color + ';"></i> ' + hoverInfo.label + ':</div>';
         seriesHtml += '<div class="graph-tooltip-value">' + value + '</div></div>';
+        if (hoverInfo.traceId) {
+          seriesHtml += '<div class="graph-tooltip-trace">Trace: ' + hoverInfo.traceId + '</div>';
+        }
         plot.highlight(hoverInfo.index, hoverInfo.hoverIndex);
       }
 
