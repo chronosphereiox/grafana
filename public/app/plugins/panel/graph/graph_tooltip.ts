@@ -127,8 +127,8 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         yaxis = series.yaxis.n;
       }
 
-      const traceId =
-        series.traceIds != null && series.traceIds[hoverIndex] != null ? series.traceIds[hoverIndex][0] : null;
+      const exemplar =
+        series.exemplars != null && series.exemplars[hoverIndex] != null ? series.exemplars[hoverIndex][0] : null;
       results[yaxis].push({
         value: value,
         hoverIndex: hoverIndex,
@@ -136,7 +136,7 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         label: series.aliasEscaped,
         time: pointTime,
         distance: hoverDistance,
-        traceId: traceId,
+        exemplar: exemplar,
         index: i,
       });
     }
@@ -265,8 +265,8 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
         seriesHtml +=
           '<i class="fa fa-minus" style="color:' + hoverInfo.color + ';"></i> ' + hoverInfo.label + ':</div>';
         seriesHtml += '<div class="graph-tooltip-value">' + value + '</div></div>';
-        if (hoverInfo.traceId) {
-          seriesHtml += '<div class="graph-tooltip-trace">Trace: ' + hoverInfo.traceId + '</div>';
+        if (hoverInfo.exemplar) {
+          seriesHtml += '<div class="graph-tooltip-trace">Trace: ' + hoverInfo.exemplar + '</div>';
         }
         plot.highlight(hoverInfo.index, hoverInfo.hoverIndex);
       }

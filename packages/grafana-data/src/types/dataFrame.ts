@@ -74,7 +74,7 @@ export interface DataFrame extends QueryResultBase {
 
   // The number of rows
   length: number;
-  traceIds?: any[][];
+  exemplars?: any[][];
 }
 
 /**

@@ -42,7 +42,7 @@ export class ResultTransformer {
 
   transformMetricData(metricData: any, options: any, start: number, end: number) {
     const dps = [];
-    const tids = [];
+    const exemplars = [];
     let metricLabel = null;
 
     metricLabel = this.createMetricLabel(metricData.metric, options);
@@ -63,19 +63,19 @@ export class ResultTransformer {
       const timestamp = parseFloat(value[0]) * 1000;
       for (let t = baseTimestamp; t < timestamp; t += stepMs) {
         dps.push([null, t]);
-        tids.push([null, t]);
+        exemplars.push([null, t]);
       }
       baseTimestamp = timestamp + stepMs;
       dps.push([dpValue, timestamp]);
       if (value.length === 3) {
-        tids.push([value[2], timestamp]);
+        exemplars.push([value[2], timestamp]);
       }
     }
 
     const endTimestamp = end * 1000;
     for (let t = baseTimestamp; t <= endTimestamp; t += stepMs) {
       dps.push([null, t]);
-      tids.push([null, t]);
+      exemplars.push([null, t]);
     }
 
     return {
@@ -83,7 +83,7 @@ export class ResultTransformer {
       query: options.query,
       target: metricLabel,
       tags: metricData.metric,
-      traceIds: tids,
+      exemplars: exemplars,
     };
   }
 

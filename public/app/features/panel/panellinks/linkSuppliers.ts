@@ -19,7 +19,7 @@ interface ValueVars {
   text: string;
   time?: number;
   calc?: string;
-  traceId?: string;
+  exemplar?: string;
 }
 
 interface DataLinkScopedVars extends ScopedVars {
@@ -72,9 +72,9 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
               numeric: value.display.numeric,
               text: value.display.text,
               time: timeField ? timeField.values.get(value.rowIndex) : undefined,
-              traceId:
-                dataFrame.traceIds != null && dataFrame.traceIds.length > value.rowIndex
-                  ? dataFrame.traceIds[value.rowIndex][0]
+              exemplar:
+                dataFrame.exemplars != null && dataFrame.exemplars.length > value.rowIndex
+                  ? dataFrame.exemplars[value.rowIndex][0]
                   : null,
             },
             text: 'Value',

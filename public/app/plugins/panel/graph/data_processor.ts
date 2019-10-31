@@ -44,7 +44,7 @@ export class DataProcessor {
         for (let r = 0; r < series.length; r++) {
           datapoints.push([field.values.get(r), timeField.values.get(r)]);
         }
-        list.push(this.toTimeSeries(field, name, i, j, datapoints, list.length, range, series.traceIds));
+        list.push(this.toTimeSeries(field, name, i, j, datapoints, list.length, range, series.exemplars));
       }
     }
 
@@ -69,7 +69,7 @@ export class DataProcessor {
     datapoints: any[][],
     index: number,
     range?: TimeRange,
-    traceIds?: any[][]
+    exemplars?: any[][]
   ) {
     const colorIndex = index % colors.length;
     const color = this.panel.aliasColors[alias] || colors[colorIndex];
@@ -90,7 +90,7 @@ export class DataProcessor {
       if (last - from.valueOf() < -10000) {
         series.isOutsideRange = true;
       }
-      series.traceIds = traceIds;
+      series.exemplars = exemplars;
     }
     return series;
   }

@@ -58,7 +58,7 @@ export interface TimeSeries extends QueryResultBase {
   datapoints: TimeSeriesPoints;
   unit?: string;
   tags?: Labels;
-  traceIds?: any[][];
+  exemplars?: any[][];
 }
 
 export enum NullValueMode {
