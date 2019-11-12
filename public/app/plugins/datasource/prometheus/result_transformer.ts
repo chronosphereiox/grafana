@@ -69,6 +69,8 @@ export class ResultTransformer {
       dps.push([dpValue, timestamp]);
       if (value.length === 3) {
         exemplars.push([value[2], timestamp]);
+      } else {
+        exemplars.push([null, timestamp]);
       }
     }
 

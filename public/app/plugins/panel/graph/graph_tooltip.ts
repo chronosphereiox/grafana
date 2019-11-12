@@ -266,7 +266,7 @@ export default function GraphTooltip(this: any, elem: any, dashboard: any, scope
           '<i class="fa fa-minus" style="color:' + hoverInfo.color + ';"></i> ' + hoverInfo.label + ':</div>';
         seriesHtml += '<div class="graph-tooltip-value">' + value + '</div></div>';
         if (hoverInfo.exemplar) {
-          seriesHtml += '<div class="graph-tooltip-trace">Trace: ' + hoverInfo.exemplar + '</div>';
+          seriesHtml += '<div class="graph-tooltip-trace">' + hoverInfo.exemplar + '</div>';
         }
         plot.highlight(hoverInfo.index, hoverInfo.hoverIndex);
       }
