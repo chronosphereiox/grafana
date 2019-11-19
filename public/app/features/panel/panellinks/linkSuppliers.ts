@@ -64,6 +64,17 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
           };
         }
 
+        let exemplar = null;
+        if (dataFrame.exemplars != null && dataFrame.exemplars.length > value.rowIndex) {
+          exemplar = dataFrame.exemplars[value.rowIndex][0];
+        }
+
+        if (exemplar != null && exemplar.indexOf('trace_id') > -1) {
+          exemplar = exemplar.substr(exemplar.indexOf('trace_id') + 8);
+          const parts = exemplar.split(':');
+          exemplar = parts[0] + '?uiFind=' + parts[1];
+        }
+
         if (value.rowIndex) {
           const { timeField } = getTimeField(dataFrame);
           scopedVars['__value'] = {
@@ -72,10 +83,7 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
               numeric: value.display.numeric,
               text: value.display.text,
               time: timeField ? timeField.values.get(value.rowIndex) : undefined,
-              exemplar:
-                dataFrame.exemplars != null && dataFrame.exemplars.length > value.rowIndex
-                  ? dataFrame.exemplars[value.rowIndex][0]
-                  : null,
+              exemplar: exemplar,
             },
             text: 'Value',
           };
