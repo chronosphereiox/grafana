@@ -70,7 +70,7 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
         }
 
         if (exemplar != null && exemplar.indexOf('trace_id') > -1) {
-          exemplar = exemplar.substr(exemplar.indexOf('trace_id') + 8);
+          exemplar = exemplar.substr(exemplar.indexOf('trace_id') + 10);
           const parts = exemplar.split(':');
           exemplar = parts[0] + '?uiFind=' + parts[1];
         }
