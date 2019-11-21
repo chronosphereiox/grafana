@@ -19,7 +19,7 @@ interface ValueVars {
   text: string;
   time?: number;
   calc?: string;
-  exemplar?: string;
+  exemplar?: any;
 }
 
 interface DataLinkScopedVars extends ScopedVars {
@@ -69,10 +69,16 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
           exemplar = dataFrame.exemplars[value.rowIndex][0];
         }
 
-        if (exemplar != null && exemplar.indexOf('trace_id') > -1) {
-          exemplar = exemplar.substr(exemplar.indexOf('trace_id') + 10);
-          const parts = exemplar.split(':');
-          exemplar = parts[0] + '?uiFind=' + parts[1];
+        let exemplarObj: any;
+        if (exemplar != null) {
+          exemplarObj = {};
+          const list = exemplar.split(';');
+          list.forEach((e: string) => {
+            const i = e.indexOf(':');
+            if (i > 0) {
+              exemplarObj[e.substr(0, i)] = e.substr(i + 1);
+            }
+          });
         }
 
         if (value.rowIndex) {
@@ -83,7 +89,7 @@ export const getFieldLinksSupplier = (value: FieldDisplay): LinkModelSupplier<Fi
               numeric: value.display.numeric,
               text: value.display.text,
               time: timeField ? timeField.values.get(value.rowIndex) : undefined,
-              exemplar: exemplar,
+              exemplar: exemplarObj,
             },
             text: 'Value',
           };
