@@ -253,20 +253,33 @@ class GraphElement {
         const dataFrame = this.ctrl.dataList[item.series.dataFrameIndex];
         const field = dataFrame.fields[item.series.fieldIndex];
 
+        let successDataFrame: DataFrameView;
+        for (let i = 0; i < this.ctrl.dataList.length; i++) {
+          const df = new DataFrameView(this.ctrl.dataList[i]);
+          if (df.dataFrame.name === '2xx') {
+            successDataFrame = df;
+          }
+          if (df.dataFrame.name === '0.1s') {
+            successDataFrame = df;
+          }
+        }
         const fieldDisplay = getDisplayProcessor({
           config: fieldConfig,
           theme: getCurrentTheme(),
         })(field.values.get(item.dataIndex));
 
         linksSupplier = this.panel.options.dataLinks
-          ? getFieldLinksSupplier({
-              display: fieldDisplay,
-              name: field.name,
-              view: new DataFrameView(dataFrame),
-              rowIndex: item.dataIndex,
-              colIndex: item.series.fieldIndex,
-              field: fieldConfig,
-            })
+          ? getFieldLinksSupplier(
+              {
+                display: fieldDisplay,
+                name: field.name,
+                view: new DataFrameView(dataFrame),
+                rowIndex: item.dataIndex,
+                colIndex: item.series.fieldIndex,
+                field: fieldConfig,
+              },
+              successDataFrame
+            )
           : undefined;
       }
 
